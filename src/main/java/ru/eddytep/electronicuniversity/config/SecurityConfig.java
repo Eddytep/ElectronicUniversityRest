@@ -27,12 +27,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/login**", "/static/**").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/", "/registration", "/login", "/users" , "/static/**")
+                        .permitAll()
+                    .anyRequest()
+                        .authenticated()
                 .and()
-                .formLogin().permitAll()
+                    .formLogin()
+                        .loginPage("http://localhost:9000/login")
+//                        .failureUrl("/login-error")
+                        .defaultSuccessUrl("http://localhost:8888/", true)
+                        .loginProcessingUrl("/authenticate")
+                            .permitAll()
                 .and()
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                    .logout()
+                        .logoutSuccessUrl("http://localhost:8888/")
+                            .permitAll()
+                .and()
+                    .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 
     @Override
