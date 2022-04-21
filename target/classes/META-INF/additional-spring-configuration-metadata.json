@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "project.url.server",
+      "type": "java.lang.String",
+      "description": "Spring server URL"
+    },
+    {
+      "name": "project.url.client",
+      "type": "java.lang.String",
+      "description": "Vue.js client URL"
+    }
+  ] }

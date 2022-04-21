@@ -1,5 +1,6 @@
 package ru.eddytep.electronicuniversity.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +16,9 @@ import ru.eddytep.electronicuniversity.services.UserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${project.url.client}")
+    private String clientUrl;
+
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
@@ -27,23 +31,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/registration", "/login", "/users" , "/static/**")
+                    .antMatchers("/", "/registration", "/login", "/users/**" , "/static/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated()
                 .and()
                     .formLogin()
-                        .loginPage("http://localhost:9000/login")
+                        .loginPage("/login")
 //                        .failureUrl("/login-error")
-                        .defaultSuccessUrl("http://localhost:8888/", true)
+                        .defaultSuccessUrl(clientUrl, true)
                         .loginProcessingUrl("/authenticate")
                             .permitAll()
                 .and()
                     .logout()
-                        .logoutSuccessUrl("http://localhost:8888/")
+                        .logoutSuccessUrl(clientUrl)
                             .permitAll()
                 .and()
-                    .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                    .csrf().disable();
     }
 
     @Override
