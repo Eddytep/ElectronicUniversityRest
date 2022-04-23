@@ -5,7 +5,9 @@ module.exports = defineConfig({
     port: 8888,
     proxy: {
       '^/': {
-        target: 'http://localhost:9000'
+        target: 'http://localhost:9000',
+        ws: false,
+        changeOrigin: true
       }
     }
   }
