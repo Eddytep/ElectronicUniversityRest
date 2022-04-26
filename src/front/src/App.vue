@@ -4,7 +4,7 @@
     <router-link to="/about">About</router-link>
     <router-link v-if="isAdmin" to="/users" >| Users</router-link>
   </nav>
-  <p>User name: {{ username }}</p>
+  <p>Auth user: {{ username }}</p>
   <router-view/>
 </template>
 
@@ -16,29 +16,23 @@ export default {
   name: 'App',
   data() {
     return {
-      ...mapState(['userAuthProfile']),
+      ...mapState(['users/userAuthProfile']),
     };
   },
   computed: {
-    profile() {
-      return store.state.userAuthProfile;
-    },
     username() {
-      return store.state.userAuthProfile.username;
-    },
-    roles() {
-      return store.state.userAuthProfile.roles;
+      return store.state.users.userAuthProfile.username
     },
     isAdmin() {
-      const roles = store.state.userAuthProfile.roles
-      return !!roles && roles.includes(store.state.adminRole);
+      const roles = store.state.users.userAuthProfile.roles
+      return !!roles && roles.includes(store.state.users.adminRole);
     },
   },
   methods: {
-    ...mapActions(['getUserAuthProfileAction']),
+    ...mapActions(['users/getUserAuthProfileAction']),
   },
   created() {
-    this.getUserAuthProfileAction()
+    store.dispatch('users/getUserAuthProfileAction')
   }
 }
 </script>

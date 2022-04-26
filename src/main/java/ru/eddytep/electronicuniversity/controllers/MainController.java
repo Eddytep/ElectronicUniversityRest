@@ -15,9 +15,4 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/second")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String second() {
-        return "{\"message\": \"second\"}";
-    }
 }

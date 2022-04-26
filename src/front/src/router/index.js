@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import UsersView from "@/views/UsersView";
+import UserProfileView from "@/views/UserProfileView";
+// import PageNotFoundView from "@/views/PageNotFoundView";
 
 const routes = [
   {
@@ -18,7 +21,21 @@ const routes = [
   {
     path: '/users',
     name: 'users',
-    component: () => import('../views/UsersView.vue')
+    component: UsersView,
+  },
+  {
+    path: '/users/:id',
+    name: 'userProfile',
+    component: UserProfileView,
+  },
+  {
+    path: '/*',
+    // path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: HomeView,
+    meta: {
+      requiresAuth: false
+    }
   }
 ]
 

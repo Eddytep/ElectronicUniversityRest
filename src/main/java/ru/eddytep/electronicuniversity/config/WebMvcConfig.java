@@ -1,5 +1,6 @@
 package ru.eddytep.electronicuniversity.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Value("${project.url.client}")
+    private String clientUrl;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
