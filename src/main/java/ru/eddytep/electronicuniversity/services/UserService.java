@@ -14,6 +14,7 @@ import ru.eddytep.electronicuniversity.repositories.UserRepository;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,8 +28,6 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-
 
     @Override
     public UserDetails loadUserByUsername(String username)
@@ -44,7 +43,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(User user, boolean isEncryptPassword) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if (Objects.nonNull(userFromDb)) {
             return false;
@@ -69,4 +68,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
 }

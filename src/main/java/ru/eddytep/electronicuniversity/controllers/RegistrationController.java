@@ -32,7 +32,7 @@ public class RegistrationController {
             User user,
             Model model
     ) {
-        boolean isUserExist = userService.addUser(user);
+        boolean isUserExist = userService.addUser(user, true);
         if (!isUserExist) {
             model.addAttribute(
                     "UserExistMessage",

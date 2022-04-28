@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -21,6 +22,11 @@ public class User implements UserDetails {
     private Long id;
 
     private String username;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String email;
+    private Date birthday;
     @JsonIgnore
     private String password;
 

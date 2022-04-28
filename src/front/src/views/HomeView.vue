@@ -1,12 +1,11 @@
 <template>
-  <div class="home">
-    <img alt="Electronic University logo" width="150" src="../assets/electronic_university_logo.png">
-
-    <div><p>{{ userProfile }}</p></div>
-    <div><a href="/login">Login</a></div>
-    <div><a href="/registration">Register</a></div>
-    <div><a href="/logout">Logout</a></div>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <h2 class="text-center py-3">Welcome to Electronic University</h2>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

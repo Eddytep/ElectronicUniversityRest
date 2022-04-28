@@ -1,11 +1,9 @@
 package ru.eddytep.electronicuniversity.controllers;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.eddytep.electronicuniversity.domain.User;
-import ru.eddytep.electronicuniversity.repositories.UserRepository;
 import ru.eddytep.electronicuniversity.services.UserService;
 
 @RestController
@@ -18,11 +16,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(produces = "application/json")
-    public User createUser(@RequestBody User user) {
-        userService.addUser(user);
-        return user;
-    }
+//    @PostMapping(produces = "application/json")
+//    public User createUser(@RequestBody User user) {
+//        userService.addUser(user, false);
+//        return user;
+//    }
 
     @GetMapping(produces = "application/json")
     public Iterable<User> getAllUsers() {
@@ -34,7 +32,7 @@ public class UserController {
         return user;
     }
 
-    @PutMapping("{id}")
+    @PatchMapping("{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User update(
             @PathVariable("id") User userFromDb,
@@ -44,10 +42,13 @@ public class UserController {
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(path = "{id}", produces = "application/json")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void delete(@PathVariable("id") User user) {
-        userService.delete(user);
+    public User delete(@PathVariable("id") User user) {
+        if (userService.findById(user.getId()).isPresent()){
+            userService.delete(user);
+        }
+        return user;
     }
 
     @GetMapping(path = "/auth", produces = "application/json")
