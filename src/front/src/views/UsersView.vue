@@ -45,7 +45,11 @@ export default {
   computed: {
     allUsers() {
       return store.state.users.allUsers.filter(user => user.username !== 'admin')
-    }
+    },
+    isAuthUserAdmin() {
+      const roles = store.state.users.userAuthProfile.roles
+      return !!roles && roles.includes(store.state.users.adminRole)
+    },
   },
   created() {
     store.dispatch('users/getAllUsersAction').catch(e => console.log(e))
@@ -53,10 +57,6 @@ export default {
   methods: {
     routeToUserProfile(userId) {
       router.push(`/users/${userId}`)
-    },
-    isAuthUserAdmin() {
-      const roles = store.state.users.userAuthProfile.roles
-      return !!roles && roles.includes(store.state.users.adminRole)
     },
     isUserStudent(user) {
       return user.roles.includes('STUDENT')
