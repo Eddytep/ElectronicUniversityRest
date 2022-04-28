@@ -3,12 +3,21 @@
     <v-data-table
         :headers="getHeaders()"
         :items="allUsers"
+        :search="search"
+        dense
     >
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>Users</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
+          <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+          ></v-text-field>
         </v-toolbar>
       </template>
       <template v-slot:item.icon="{ item }">
@@ -16,8 +25,9 @@
         <v-icon v-else small class="mr-2" >mdi-account-tie</v-icon>
       </template>
       <template v-if="isAuthUserAdmin" v-slot:item.actions="{ item }">
-        <v-icon small @click="editUser(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteUser(item)">mdi-delete</v-icon>
+        <v-icon @click="routeToUserProfile(item.id)">mdi-information-variant</v-icon>
+        <v-icon @click="editUser(item)">mdi-account-edit</v-icon>
+        <v-icon @click="deleteUser(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
   </v-container>
@@ -32,7 +42,7 @@ export default {
   data() {
     return {
       dialog: false,
-      selectedItem: 1,
+      search: '',
       headers: [
         {text: '', value: 'icon', sortable: false},
         {text: 'First Name', value: 'firstName'},
@@ -57,6 +67,7 @@ export default {
   methods: {
     routeToUserProfile(userId) {
       router.push(`/users/${userId}`)
+      // console.log(userId)
     },
     isUserStudent(user) {
       return user.roles.includes('STUDENT')
