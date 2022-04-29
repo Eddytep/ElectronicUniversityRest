@@ -1,4 +1,9 @@
 insert into usr (id, username, first_name, last_name, middle_name, email, birthday, password)
+values(nextval('hibernate_sequence'), 'user', 'Юзер', 'Юзерович', 'Юзеров', 'user123@mail.ru', '2018-05-21', '$2a$08$P/TMiGzwgFHDNmYDklSyy.pqesF6Qf9rwL.ESD2uLAgyioeikmWJ2');
+insert into user_role (user_id, roles)
+values(currval('hibernate_sequence'), 'USER');
+
+insert into usr (id, username, first_name, last_name, middle_name, email, birthday, password)
 values(nextval('hibernate_sequence'), 'averki1997', 'Светозар', 'Еремеевич', 'Аксенов', 'averki1997@rambler.ru', '2018-05-21', '$2b$08$bB9SXlHfD6PVwXG.n0ql/eZtLpB75YW8xNtpyDavCk3DFoYVPeH2.');
 insert into user_role (user_id, roles)
 values(currval('hibernate_sequence'), 'INSTRUCTOR');

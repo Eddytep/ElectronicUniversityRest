@@ -17,7 +17,7 @@ export default {
     Navbar
   },
   created() {
-    store.dispatch('users/getUserAuthProfileAction')
+    // store.dispatch('users/getUserAuthProfileAction')
   }
 }
 </script>
